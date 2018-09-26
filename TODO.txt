@@ -1,0 +1,29 @@
+TODO
+-gravelorded (event scripts, probably) - find npcs with speffect = 7100 or draw type = 2
+-check if all npcs are aggro. if not, event scripts
+-Bullet param: is endless hit
+-Bullet param: is penetrate map
+
+for multi bullets: 
+-add some shoot angle interval, spread time (?)
+
+-for homing try stop and begin = 0
+
+-check if 2x velocity for bullets is good
+-some bullets explode
+-swole invaders (and give em all rtsr)
+-insulting hit sounds (roblox oof/willfromafar)
+
+-enemies go through walls??? npc param move type = 6
+
+-npc param - use ragdoll, then fuck with ragdoll params?
+
+REMOVE?
+-enemy stamina regen
+-super armor on all attacks
+-attacks hit through guard
+-rings break
+-weapons like crystal
+-sour spot weapons (test first)
+-increased upgrade cost
+-everyone hates you
