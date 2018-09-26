@@ -16,6 +16,8 @@ for multi bullets:
 
 -enemies go through walls??? npc param move type = 6
 
+-find swole params
+
 -npc param - use ragdoll, then fuck with ragdoll params?
 
 REMOVE?

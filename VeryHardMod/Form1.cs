@@ -384,6 +384,56 @@ namespace VeryHardMod
                         {
                             //increase strength, dex, vit, end by 1.5x?
 
+                            if(cell.Def.Name == "baseVit" && chkSwoleInvaders.Checked)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                            }
+                            else if(cell.Def.Name == "baseEnd" && chkSwoleInvaders.Checked)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                            }
+                            else if (cell.Def.Name == "baseStr" && chkSwoleInvaders.Checked)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                            }
+                            else if (cell.Def.Name == "baseDex" && chkSwoleInvaders.Checked)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                            }
+                            else if (cell.Def.Name == "bodyScaleHead" && chkSwoleInvaders.Checked)
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 10, null);
+                            }
+                            else if (cell.Def.Name == "bodyScaleBreast" && chkSwoleInvaders.Checked)
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 50, null);
+                            }
+                            else if (cell.Def.Name == "bodyScaleAbdomen" && chkSwoleInvaders.Checked)
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 10, null);
+                            }
+                            else if (cell.Def.Name == "bodyScaleArm" && chkSwoleInvaders.Checked)
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 100, null);
+                            }
+                            else if (cell.Def.Name == "bodyScaleLeg" && chkSwoleInvaders.Checked)
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 50, null);
+                            }
                         }
                     }
                 }
@@ -467,6 +517,39 @@ namespace VeryHardMod
                 {
 
                 }));
+            }
+
+            if (chkGravelorded.Checked) {
+                //load msbs
+                List<MSB> msbs = Directory.GetFiles(gameDirectory + "\\map\\MapStudio\\", "*.msb")
+                    .Select(p => DataFile.LoadFromFile<MSB>(p, new Progress<(int, int) > ((pr) =>
+                    {
+
+                    }))).ToList();
+
+                int[] gravelordParamIds = { 120104, 206003, 206004, 206005, 224002, 227002, 228002, 237003, 238002, 239003, 241005, 241006, 250032, 250033, 250053, 252001, 254013, 254014, 255043, 255044, 256003, 256004, 256013, 256014, 257002, 257012, 257022, 266001, 269004, 270002, 271002, 279060, 279061, 279062, 279063, 281001, 281101, 284003, 284004, 287001, 287011, 290013, 290014, 291015, 293002, 293003, 295001, 324001, 333003, 349050, 349051, 349052, 349053, 349054, 349055, 349056, 349057, 349058, 349059, 349060, 349061, 349062, 349063, 349064, 349200, 349201, 349202, 349203, 349204, 349205, 349206, 349207, 349208, 349209, 349210, 349211, 349212, 349213, 349214, 409010, 412001, 413004, 413014, 415001, 416001, 418001 };
+
+
+                //disassociate gravelord npcs with their events, since they default to enabled
+                foreach (MSB map in msbs)
+                {
+                    foreach (var NPC in map.Parts.NPCs)
+                    {
+                        if (gravelordParamIds.Contains(NPC.NPCParamID))
+                        {
+                            NPC.EventEntityID = -1;
+                        }
+                    }
+                }
+
+                //resave MSB
+                foreach (MSB map in msbs)
+                {
+                    DataFile.Resave(map, new Progress<(int, int) > ((p) =>
+                    {
+
+                    }));
+                }
             }
 
             if (rdbInsultingHitSounds1.Checked)
