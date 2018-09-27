@@ -20,6 +20,8 @@ for multi bullets:
 
 -npc param - use ragdoll, then fuck with ragdoll params?
 
+-npc attack special attributes - all 3
+
 REMOVE?
 -enemy stamina regen
 -super armor on all attacks
@@ -28,4 +30,3 @@ REMOVE?
 -weapons like crystal
 -sour spot weapons (test first)
 -increased upgrade cost
--everyone hates you
