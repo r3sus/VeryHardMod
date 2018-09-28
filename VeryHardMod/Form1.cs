@@ -31,6 +31,8 @@ namespace VeryHardMod
             //check if running exe from data directory
             gameDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
+            gameDirectory = @"D:\Program Files (x86)\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\";
+
             if (File.Exists(gameDirectory + "\\DARKSOULS.exe"))
             {
                 //exe is in a valid game directory, just use this as the path instead of asking for input
@@ -104,10 +106,7 @@ namespace VeryHardMod
             await Task.Factory.StartNew(() => UiThread.WriteToInfoLabel(progress));
 
 
-
-
-
-
+            //TODO backup map files
             //create backup of gameparam
             if (!File.Exists(gameDirectory + "\\param\\GameParam\\GameParam.parambnd.bak"))
             {
@@ -184,7 +183,7 @@ namespace VeryHardMod
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 //TODO tweak this
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) + 1.2, null);
+                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.1, null);
                             }
                             else if (cell.Def.Name == "atkSuperArmor" && chkAttackSuperArmor.Checked)
                             {
@@ -382,27 +381,25 @@ namespace VeryHardMod
                     {
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                         {
-                            //increase strength, dex, vit, end by 1.5x?
-
                             if(cell.Def.Name == "baseVit" && chkSwoleInvaders.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) * 1.5, null);
                             }
                             else if(cell.Def.Name == "baseEnd" && chkSwoleInvaders.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) * 1.5, null);
                             }
                             else if (cell.Def.Name == "baseStr" && chkSwoleInvaders.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) * 1.5, null);
                             }
                             else if (cell.Def.Name == "baseDex" && chkSwoleInvaders.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) * 1.5, null);
                             }
                             else if (cell.Def.Name == "bodyScaleHead" && chkSwoleInvaders.Checked)
                             {
@@ -448,15 +445,20 @@ namespace VeryHardMod
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 prop.SetValue(cell, (float)(prop.GetValue(cell, null)) + 45, null);
                             }
-                            else if(cell.Def.Name == "HormingStopRange" && chkHomingBullets.Checked)
+                            else if(cell.Def.Name == "homingBeginDist" && chkHomingBullets.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) + 25, null);
+                                prop.SetValue(cell, (float)10, null);
+                            }
+                            else if (cell.Def.Name == "hormingStopRange" && chkHomingBullets.Checked)
+                            {
+                                PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                prop.SetValue(cell, (float)0, null);
                             }
                             else if(cell.Def.Name == "maxVellocity" && chkFasterBullets.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 1.5, null);
+                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
                             }
                             else if(cell.Def.Name == "initVellocity" && chkFasterBullets.Checked)
                             {
@@ -483,6 +485,16 @@ namespace VeryHardMod
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
                                 prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
                             }
+                            //else if (cell.Def.Name == "shootAngle" && chKMoreBullets.Checked)
+                            //{
+                            //    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                            //    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                            //}
+                            //else if (cell.Def.Name == "shootAngleXInterval" && chKMoreBullets.Checked)
+                            //{
+                            //    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                            //    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                            //}
                             else if (cell.Def.Name == "isPenetrateMap:1" && chkBulletsPentrateMap.Checked)
                             {
                                 PropertyInfo prop = cell.GetType().GetProperty("Value");
