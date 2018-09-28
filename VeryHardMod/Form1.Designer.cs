@@ -80,8 +80,6 @@
             // chkKnockback
             // 
             this.chkKnockback.AutoSize = true;
-            this.chkKnockback.Checked = true;
-            this.chkKnockback.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkKnockback.Location = new System.Drawing.Point(35, 213);
             this.chkKnockback.Name = "chkKnockback";
             this.chkKnockback.Size = new System.Drawing.Size(217, 17);
@@ -92,8 +90,6 @@
             // chkFasterBullets
             // 
             this.chkFasterBullets.AutoSize = true;
-            this.chkFasterBullets.Checked = true;
-            this.chkFasterBullets.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkFasterBullets.Location = new System.Drawing.Point(272, 70);
             this.chkFasterBullets.Name = "chkFasterBullets";
             this.chkFasterBullets.Size = new System.Drawing.Size(88, 17);
@@ -104,8 +100,6 @@
             // chkHomingBullets
             // 
             this.chkHomingBullets.AutoSize = true;
-            this.chkHomingBullets.Checked = true;
-            this.chkHomingBullets.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkHomingBullets.Location = new System.Drawing.Point(272, 47);
             this.chkHomingBullets.Name = "chkHomingBullets";
             this.chkHomingBullets.Size = new System.Drawing.Size(134, 17);
@@ -116,8 +110,6 @@
             // chkStaminaRegen
             // 
             this.chkStaminaRegen.AutoSize = true;
-            this.chkStaminaRegen.Checked = true;
-            this.chkStaminaRegen.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkStaminaRegen.Location = new System.Drawing.Point(35, 166);
             this.chkStaminaRegen.Name = "chkStaminaRegen";
             this.chkStaminaRegen.Size = new System.Drawing.Size(158, 17);
@@ -128,8 +120,6 @@
             // chkTurnSpeed
             // 
             this.chkTurnSpeed.AutoSize = true;
-            this.chkTurnSpeed.Checked = true;
-            this.chkTurnSpeed.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkTurnSpeed.Location = new System.Drawing.Point(35, 142);
             this.chkTurnSpeed.Name = "chkTurnSpeed";
             this.chkTurnSpeed.Size = new System.Drawing.Size(142, 17);
@@ -140,8 +130,6 @@
             // chkLargerHitboxes
             // 
             this.chkLargerHitboxes.AutoSize = true;
-            this.chkLargerHitboxes.Checked = true;
-            this.chkLargerHitboxes.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkLargerHitboxes.Location = new System.Drawing.Point(35, 118);
             this.chkLargerHitboxes.Name = "chkLargerHitboxes";
             this.chkLargerHitboxes.Size = new System.Drawing.Size(185, 17);
@@ -152,8 +140,6 @@
             // chkKnockDown
             // 
             this.chkKnockDown.AutoSize = true;
-            this.chkKnockDown.Checked = true;
-            this.chkKnockDown.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkKnockDown.Location = new System.Drawing.Point(35, 94);
             this.chkKnockDown.Name = "chkKnockDown";
             this.chkKnockDown.Size = new System.Drawing.Size(138, 17);
@@ -164,8 +150,6 @@
             // chkAggroMod
             // 
             this.chkAggroMod.AutoSize = true;
-            this.chkAggroMod.Checked = true;
-            this.chkAggroMod.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAggroMod.Location = new System.Drawing.Point(35, 70);
             this.chkAggroMod.Name = "chkAggroMod";
             this.chkAggroMod.Size = new System.Drawing.Size(122, 17);
@@ -176,8 +160,6 @@
             // chkGravelorded
             // 
             this.chkGravelorded.AutoSize = true;
-            this.chkGravelorded.Checked = true;
-            this.chkGravelorded.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkGravelorded.Location = new System.Drawing.Point(35, 47);
             this.chkGravelorded.Name = "chkGravelorded";
             this.chkGravelorded.Size = new System.Drawing.Size(117, 17);
@@ -222,8 +204,6 @@
             // chKMoreBullets
             // 
             this.chKMoreBullets.AutoSize = true;
-            this.chKMoreBullets.Checked = true;
-            this.chKMoreBullets.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chKMoreBullets.Location = new System.Drawing.Point(272, 93);
             this.chKMoreBullets.Name = "chKMoreBullets";
             this.chKMoreBullets.Size = new System.Drawing.Size(86, 17);
@@ -234,8 +214,6 @@
             // chkRingsBreak
             // 
             this.chkRingsBreak.AutoSize = true;
-            this.chkRingsBreak.Checked = true;
-            this.chkRingsBreak.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkRingsBreak.Location = new System.Drawing.Point(272, 118);
             this.chkRingsBreak.Name = "chkRingsBreak";
             this.chkRingsBreak.Size = new System.Drawing.Size(148, 17);
@@ -246,8 +224,6 @@
             // chkWeaponBreak
             // 
             this.chkWeaponBreak.AutoSize = true;
-            this.chkWeaponBreak.Checked = true;
-            this.chkWeaponBreak.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkWeaponBreak.Location = new System.Drawing.Point(272, 141);
             this.chkWeaponBreak.Name = "chkWeaponBreak";
             this.chkWeaponBreak.Size = new System.Drawing.Size(135, 17);
@@ -258,8 +234,6 @@
             // chkNPCAggro
             // 
             this.chkNPCAggro.AutoSize = true;
-            this.chkNPCAggro.Checked = true;
-            this.chkNPCAggro.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkNPCAggro.Location = new System.Drawing.Point(272, 213);
             this.chkNPCAggro.Name = "chkNPCAggro";
             this.chkNPCAggro.Size = new System.Drawing.Size(120, 17);
@@ -270,8 +244,6 @@
             // chkAttackSuperArmor
             // 
             this.chkAttackSuperArmor.AutoSize = true;
-            this.chkAttackSuperArmor.Checked = true;
-            this.chkAttackSuperArmor.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAttackSuperArmor.Location = new System.Drawing.Point(35, 190);
             this.chkAttackSuperArmor.Name = "chkAttackSuperArmor";
             this.chkAttackSuperArmor.Size = new System.Drawing.Size(149, 17);
@@ -282,8 +254,6 @@
             // chkAttackThroughGuard
             // 
             this.chkAttackThroughGuard.AutoSize = true;
-            this.chkAttackThroughGuard.Checked = true;
-            this.chkAttackThroughGuard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAttackThroughGuard.Location = new System.Drawing.Point(35, 236);
             this.chkAttackThroughGuard.Name = "chkAttackThroughGuard";
             this.chkAttackThroughGuard.Size = new System.Drawing.Size(158, 17);
@@ -294,8 +264,6 @@
             // chkWeaponSourSpot
             // 
             this.chkWeaponSourSpot.AutoSize = true;
-            this.chkWeaponSourSpot.Checked = true;
-            this.chkWeaponSourSpot.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkWeaponSourSpot.Location = new System.Drawing.Point(272, 165);
             this.chkWeaponSourSpot.Name = "chkWeaponSourSpot";
             this.chkWeaponSourSpot.Size = new System.Drawing.Size(145, 17);
@@ -306,8 +274,6 @@
             // chkUpgradeCost
             // 
             this.chkUpgradeCost.AutoSize = true;
-            this.chkUpgradeCost.Checked = true;
-            this.chkUpgradeCost.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkUpgradeCost.Location = new System.Drawing.Point(272, 190);
             this.chkUpgradeCost.Name = "chkUpgradeCost";
             this.chkUpgradeCost.Size = new System.Drawing.Size(138, 17);

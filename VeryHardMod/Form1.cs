@@ -31,7 +31,8 @@ namespace VeryHardMod
             //check if running exe from data directory
             gameDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            gameDirectory = @"D:\Program Files (x86)\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\";
+            //gameDirectory = @"D:\Program Files (x86)\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\";
+            gameDirectory = @"C:\Users\mcouture\Desktop\DS-Modding\Dark Souls Prepare to Die Edition\DATA\";
 
             if (File.Exists(gameDirectory + "\\DARKSOULS.exe"))
             {
@@ -278,6 +279,21 @@ namespace VeryHardMod
                     {
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
                         {
+                            int[] flyingHollowIds = { 250000, 250010, 250020, 250022, 250025, 250030, 250040, 250050, 250053 };
+
+                            if (cell.Def.Name == "moveType" && (cell.Def.ID == 267000 || cell.Def.ID == 268000))
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 3, null);
+                            }
+                            else if (cell.Def.Name == "movetype" && flyingHollowIds.Contains(cell.Def.ID))
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, 6, null);
+                            }
+
                             //max turn velocity cuz its hilarous and OP
                             if (cell.Def.Name == "turnVellocity" && chkTurnSpeed.Checked)
                             {
@@ -297,7 +313,7 @@ namespace VeryHardMod
                                 PropertyInfo prop = type.GetProperty("Value");
                                 int teamType = Convert.ToInt32(prop.GetValue(cell, null));
                                 //friendly or summon (yes summons will attack you)
-                                if (teamType == 2 || teamType == 7)
+                                if (cell.Def.ID != 100000 && (teamType == 2 || teamType == 7))
                                 {
                                     prop.SetValue(cell, 0, null);
                                 }
@@ -372,6 +388,16 @@ namespace VeryHardMod
                                     prop.SetValue(cell, 10, null);
                                 }
                             }
+
+                            int[] ghostMoveIds = { 267000, 267001, 267002, 267010, 267011, 267020, 267021, 267030, 267031, 267040, 267041, 267050, 268000, 268001 };
+
+                            if ((cell.Def.Name == "EnableNaviFlg_InSideWall:1" || cell.Def.Name == "EnableNaviFlg_Hole:1") && ghostMoveIds.Contains(cell.Def.ID))
+                            {
+                                Type type = cell.GetType();
+                                PropertyInfo prop = type.GetProperty("Value");
+                                prop.SetValue(cell, false, null);
+                            }
+
                         }
                     }
                 }
@@ -439,71 +465,402 @@ namespace VeryHardMod
                     foreach (MeowDSIO.DataTypes.PARAM.ParamRow paramRow in paramFile.Entries)
                     {
                         foreach (MeowDSIO.DataTypes.PARAM.ParamCellValueRef cell in paramRow.Cells)
-                        {                          
-                            if(cell.Def.Name == "HomingAngle" && chkHomingBullets.Checked)
+                        {
+                            //stray demon explosion on self - leave lava
+                            if (cell.Def.ID == 22306 || cell.Def.ID == 22313)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) + 45, null);
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    //quelaag lava - maybe
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 52803, null);
+                                }
                             }
-                            else if(cell.Def.Name == "homingBeginDist" && chkHomingBullets.Checked)
+                            //batwing demon spear throw - slow, high tracking
+                            else if (cell.Def.ID == 22600)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)10, null);
+                                if(cell.Def.Name == "HomingAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 20, null);
+                                }
+                                else if (cell.Def.Name == "InitVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 20, null);
+                                }
                             }
-                            else if (cell.Def.Name == "hormingStopRange" && chkHomingBullets.Checked)
+                            //Titanite demon lightning - fast with splash effect
+                            else if (cell.Def.ID == 23000)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)0, null);
+                                if(cell.Def.Name == "InitVellocity" || cell.Def.Name == "MaxVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 30, null);
+                                }
+                                else if (cell.Def.Name == "HitBulletID")
+                                {
+                                    //sanctuary guardian
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 34720, null);
+                                }
                             }
-                            else if(cell.Def.Name == "maxVellocity" && chkFasterBullets.Checked)
+                            //Iron Golem axe projectile
+                            else if (cell.Def.ID == 23200)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
+                                if (cell.Def.Name == "HomingAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 20, null);
+                                }
+                                else if (cell.Def.Name == "InitVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 10, null);
+                                }
                             }
-                            else if(cell.Def.Name == "initVellocity" && chkFasterBullets.Checked)
+                            //channeler fast soul arrow
+                            else if (cell.Def.ID == 23700)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    //MLGS explosion
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 1051, null);
+                                }
                             }
-                            else if (cell.Def.Name == "minVellocity" && chkFasterBullets.Checked)
+                            //channeler slow soul arrow
+                            else if (cell.Def.ID == 23701)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
+                                if (cell.Def.Name == "numShoot")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 8, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, -5, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 5, null);
+                                }
                             }
-                            else if (cell.Def.Name == "numShoot" && chKMoreBullets.Checked)
+                            //painting guardian throwing knife
+                            else if (cell.Def.ID == 24000)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 25402, null);
+                                }
                             }
-                            else if (cell.Def.Name == "spreadTime" && chKMoreBullets.Checked)
+                            //silver knight arrow
+                            else if (cell.Def.ID == 24100)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 2, null);
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 25402, null);
+                                }
                             }
-                            else if (cell.Def.Name == "shootAngleInterval" && chKMoreBullets.Checked)
+                            //snake jar 1
+                            else if (cell.Def.ID == 24300)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 8200, null);
+                                }
                             }
-                            //else if (cell.Def.Name == "shootAngle" && chKMoreBullets.Checked)
-                            //{
-                            //    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                            //    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
-                            //}
-                            //else if (cell.Def.Name == "shootAngleXInterval" && chKMoreBullets.Checked)
-                            //{
-                            //    PropertyInfo prop = cell.GetType().GetProperty("Value");
-                            //    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
-                            //}
-                            else if (cell.Def.Name == "isPenetrateMap:1" && chkBulletsPentrateMap.Checked)
+                            //snake jar 2
+                            else if (cell.Def.ID == 24301)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, true, null);
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 8200, null);
+                                }
                             }
-                            else if (cell.Def.Name == "isEndlessHit:1" && chkBulletEndlessHit.Checked)
+                            //hollow archer
+                            else if (cell.Def.ID == 25000)
                             {
-                                PropertyInfo prop = cell.GetType().GetProperty("Value");
-                                prop.SetValue(cell, true, null);
+                                if (cell.Def.Name == "InitVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 1, null);
+                                }
+                                else if (cell.Def.Name == "HomingAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 360, null);
+                                }
+                            }
+                            //hollow thief throwing knife
+                            else if (cell.Def.ID == 25200)
+                            {
+                                if (cell.Def.Name == "numShoot")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 360, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 10, null);
+                                }
+                            }
+                            //blowdart
+                            else if (cell.Def.ID == 25300)
+                            {
+                                if (cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 2610, null);
+                                }
+                            }
+                            //hollow firebomb
+                            else if (cell.Def.ID == 25400)
+                            {
+                                if (cell.Def.Name == "initVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 30, null);
+                                }
+                                else if (cell.Def.Name == "GravityInRange")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 0, null);
+                                }
+                                else if (cell.Def.Name == "GravityOutRange")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 0, null);
+                                }
+                            }
+                            //undead soldier crossbow
+                            else if (cell.Def.ID == 25500)
+                            {
+                                if (cell.Def.Name == "numShoot")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 10, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 2, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, -2, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleXZ")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, -1, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleXInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 1, null);
+                                }
+                                else if (cell.Def.Name == "initVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 30, null);
+                                }
+                                else if (cell.Def.Name == "ShootInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)0.1, null);
+                                }
+                                else if (cell.Def.Name == "SpreadTime")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)0.9, null);
+                                }
+                                else if (cell.Def.Name == "isPenetrateMap:1")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, true, null);
+                                }
+                            }
+                            //balder crossbow
+                            else if (cell.Def.ID == 25600)
+                            {
+                                if (cell.Def.Name == "ShootAngleXZ")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 90, null);
+                                }
+                                else if (cell.Def.Name == "HomingAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)180, null);
+                                }
+                                else if (cell.Def.Name == "numShoot")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 6, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 5, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, -5, null);
+                                }
+                            }
+                            //snake mage
+                            else if (cell.Def.ID == 27000)
+                            {
+
+                            }
+                            //crystal hollow archer
+                            else if (cell.Def.ID == 28000)
+                            {
+
+                            }
+                            //giant skeleton archer
+                            else if (cell.Def.ID == 29010)
+                            {
+                                if (cell.Def.Name == "initVellocity")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 5, null);
+                                }
+                            }
+                            //kalameet TODO find correct bullet
+                            else if (cell.Def.ID == 45180)
+                            {
+                                if (cell.Def.Name == "numShoot")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 2, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngleInterval")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 45, null);
+                                }
+                                else if (cell.Def.Name == "ShootAngle")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, -22, null);
+                                }
+                            }
+                            //possibly nitos scream
+                            else if (cell.Def.ID == 6410)
+                            {
+                                if(cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 35011, null);
+                                }
+                            }
+                            //garg breath
+                            else if (cell.Def.ID == 53500)
+                            {
+                                if (cell.Def.Name == "SfxId_Bullet")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 5011, null);
+                                }
+                                else if (cell.Def.Name == "HitBulletID")
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, 501, null);
+                                }
+                            }
+                            //flying garg breath
+                            else if (cell.Def.ID == 53501)
+                            {
+
+                            }
+                            //lightning garg breath
+                            else if (cell.Def.ID == 53510)
+                            {
+
+                            }
+                            //lightning flying garg breath
+                            else if (cell.Def.ID == 53510)
+                            {
+
+                            }
+                            else
+                            {
+                                if (cell.Def.Name == "HomingAngle" && chkHomingBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)(prop.GetValue(cell, null)) + 45, null);
+                                }
+                                else if (cell.Def.Name == "homingBeginDist" && chkHomingBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)10, null);
+                                }
+                                else if (cell.Def.Name == "hormingStopRange" && chkHomingBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)0, null);
+                                }
+                                else if (cell.Def.Name == "maxVellocity" && chkFasterBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
+                                }
+                                else if (cell.Def.Name == "initVellocity" && chkFasterBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
+                                }
+                                else if (cell.Def.Name == "minVellocity" && chkFasterBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, (float)(prop.GetValue(cell, null)) * 2, null);
+                                }
+                                else if (cell.Def.Name == "numShoot" && chKMoreBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                                }
+                                else if (cell.Def.Name == "spreadTime" && chKMoreBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 2, null);
+                                }
+                                else if (cell.Def.Name == "shootAngleInterval" && chKMoreBullets.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                                }
+                                //else if (cell.Def.Name == "shootAngle" && chKMoreBullets.Checked)
+                                //{
+                                //    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                //    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                                //}
+                                //else if (cell.Def.Name == "shootAngleXInterval" && chKMoreBullets.Checked)
+                                //{
+                                //    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                //    prop.SetValue(cell, Convert.ToInt32(prop.GetValue(cell, null)) + 5, null);
+                                //}
+                                else if (cell.Def.Name == "isPenetrateMap:1" && chkBulletsPentrateMap.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, true, null);
+                                }
+                                else if (cell.Def.Name == "isEndlessHit:1" && chkBulletEndlessHit.Checked)
+                                {
+                                    PropertyInfo prop = cell.GetType().GetProperty("Value");
+                                    prop.SetValue(cell, true, null);
+                                }
                             }
                         }
                     }
